@@ -27,4 +27,31 @@ class NormAlgoTests {
             test("data/test4.txt")
         )
     }
+    @Test
+    fun `module test goThroughRules` () {
+        assertEquals(Pair("aaæææäå", true), goThroughRules("aaæäå", listOf<String>("æ ->. æææ")))
+        assertEquals(Pair("aaæææäå", false), goThroughRules("aaæäå", listOf<String>("æ -> æææ")))
+        assertEquals(Pair("abababababuuaa", true),
+                goThroughRules("abababababaaaa", listOf<String>("d -> ss", "aa ->. uu")))
+        assertEquals(Pair("abababababuuaa", false),
+                goThroughRules("abababababaaaa", listOf<String>("d -> ss", "aa -> uu")))
+        assertEquals(Pair("19992743645", true),
+                goThroughRules("1525326372743645", listOf<String>("1222 -> 23",
+                                                                           "543 -> 74574",
+                                                                           "24324 -> 2423",
+                                                                           "52532637 ->. 999")))
+    }
+    @Test
+    fun `module test checkInput` () {
+        assertEquals(true, checkInput("aaæäå", listOf<String>("a ->. aaaa")))
+        assertEquals(false, checkInput("aaæäå", listOf<String>("a ->. a a")))
+        assertEquals(false, checkInput("a", listOf<String>("a  aaaa")))
+        assertEquals(false, checkInput("a", listOf<String>(" a aaaa")))
+        assertEquals(false, checkInput("a", listOf<String>("a aaaa ")))
+        assertEquals(false, checkInput("a", listOf<String>("a aaaa")))
+        assertEquals(false, checkInput("aaæäå", listOf<String>("a ->. aaaa 999")))
+        assertEquals(false, checkInput("77", listOf<String>("a ->. ##")))
+        assertEquals(true, checkInput("aaæäå", listOf<String>("a ->. 1111")))
+        assertEquals(false, checkInput("uu8", listOf<String>("a ->. &ads")))
+    }
 }

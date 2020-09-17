@@ -89,9 +89,12 @@ fun checkInput(inpString: String, rules: List<String>) : Boolean {
         val temp = rule.trim().split(" ")
         if(temp.size != 3)
             inputCorrect = false //Проверяем, все ли у нас 3 части операции (Что менять, на что менять и как менять)
-
-        if(!temp[0].all { it.isLetter() || it.isDigit() }) { inputCorrect = false } //Проверяем на соответствие алфавиту
-        if(!temp[2].all { it.isLetter() || it.isDigit() }) { inputCorrect = false } //Проверяем на соответствие алфавиту
+        else{
+            if(!temp[0].all { it.isLetter() || it.isDigit() }) { inputCorrect = false }
+            if(temp[1] == "") { inputCorrect = false }
+            if(!temp[2].all { it.isLetter() || it.isDigit() }) { inputCorrect = false }
+            //Проверяем на соответствие алфавиту
+        }
     }
     return(inputCorrect)
 }
