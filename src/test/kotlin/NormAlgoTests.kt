@@ -9,12 +9,8 @@ class NormAlgoTests {
     fun `simple test` () {
         assertEquals("1000", main("data/test1.txt"))
         assertEquals("10", main("data/test2.txt"))
-
-    }
-
-    @Test
-    fun `illegal argument test` () {
-
+        assertEquals("absdsdsdd334b4b4bibsbocannn", main("data/test5.txt"))
+        assertEquals("askfjssdfalf", main("data/test6.txt"))
     }
 
     @Test

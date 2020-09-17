@@ -22,8 +22,10 @@ fun main(args: String) : String {
             return "Алгоритм работает свыше 5 секунд"
         endAlgo = goThroughRules(inpString, rules).second
         inpString = goThroughRules(inpString, rules).first //Обновляем слово
-        if (endAlgo)
+        if (endAlgo) {
             print(inpString)
+            println("")
+        }
         else
             print("$inpString ->  ")
     }
