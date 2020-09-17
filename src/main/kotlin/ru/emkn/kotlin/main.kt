@@ -8,15 +8,18 @@ fun main(args: String) : String {
     rules = rules.drop(1) //Удаляем ее из List
 
     if(!checkInput(inpString, rules)) {
-        println("Входные данные некорректны. Прочитайте документацию в файле DOC.md")
-        return ""
+        return "Входные данные некорректны. Прочитайте документацию в файле DOC.md"
     }
 
     print("$inpString ->  ") //Вывод для отслеживания процесса выполнения алгоритма
 
     var endAlgo = false //Индикатор, нужно ли завершать алгоритм
 
+    val start = System.currentTimeMillis() //Начнем отсчет времени работы алгоритма
+
     while (!endAlgo) {
+        if(System.currentTimeMillis() - start > 5000)
+            return "Алгоритм работает свыше 5 секунд"
         endAlgo = goThroughRules(inpString, rules).second
         inpString = goThroughRules(inpString, rules).first //Обновляем слово
         if (endAlgo)
