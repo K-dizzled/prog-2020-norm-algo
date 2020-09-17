@@ -1,16 +1,15 @@
 package ru.emkn.kotlin
 import java.io.File
-import java.util.*
 
 //val scan = Scanner(System.`in`)
-fun main(args: Array<String>) {
-    var rules = readFileAsLinesUsingUseLines("input.txt") //Считываем набор строк из файла
+fun main(args: String) : String {
+    var rules = readFileAsLinesUsingUseLines(args) //Считываем набор строк из файла
     var inpString = rules[0] //Отделяем строку, с которой будем работать
     rules = rules.drop(1) //Удаляем ее из List
 
     if(!checkInput(inpString, rules)) {
         println("Входные данные некорректны. Прочитайте документацию в файле DOC.md")
-        return
+        return ""
     }
 
     print("$inpString ->  ") //Вывод для отслеживания процесса выполнения алгоритма
@@ -25,6 +24,7 @@ fun main(args: Array<String>) {
         else
             print("$inpString ->  ")
     }
+    return "$inpString"
 }
 fun goThroughRules (inpString: String, rules: List<String>) : Pair<String, Boolean> {
     var endAlgo = true
