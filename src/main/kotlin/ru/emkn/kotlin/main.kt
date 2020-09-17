@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
     }
 }
 
-fun load(args: String) : String {
+fun test(args: String) : String {
     var rules = readFileAsLinesUsingUseLines(args) //Считываем набор строк из файла
     var inpString = rules[0] //Отделяем строку, с которой будем работать
     rules = rules.drop(1) //Удаляем ее из List
@@ -61,17 +61,19 @@ fun load(args: String) : String {
         else
             print("$inpString ->  ")
     }
-    return "$inpString"
+    return inpString
 }
 
 fun goThroughRules (inpString: String, rules: List<String>) : Pair<String, Boolean> {
     var endAlgo = true
     for (rule in rules) {
-        val line = rule.split(" ")
-        if(inpString.contains(line[0])){
-            if (!line[1].contains("."))
+        val line = rule.trim().split(" ") //Разбиваем очередное правило на три части
+        if(inpString.contains(line[0])){ //Проверяем, есть ли в нашем слове нужная подстрока
+            if (!line[1].contains(".")) //Проверяем конечность операции
                 endAlgo = false
-            return Pair(inpString.replaceFirst(line[0], line[2]), endAlgo)
+            return Pair(inpString.replaceFirst(line[0], line[2]), endAlgo) //Возвращаем пару элементов:
+                                                                          //Измененное слово и флажок, указывающий
+                                                                         //на то, нужно ли заканчивать алгоритм
         }
     }
     return Pair(inpString, true)
@@ -81,14 +83,15 @@ fun readFileAsLinesUsingUseLines(fileName: String): List<String>
 
 fun checkInput(inpString: String, rules: List<String>) : Boolean {
     var inputCorrect = true
-    if(!inpString.all { it.isLetter() || it.isDigit() }) { inputCorrect = false }
+    if(!inpString.all { it.isLetter() || it.isDigit() }) { inputCorrect = false } //Проверяем на соответствие алфавиту
 
     for (rule in rules) {
         val temp = rule.trim().split(" ")
         if(temp.size != 3)
-            inputCorrect = false
-        if(!temp[0].all { it.isLetter() || it.isDigit() }) { inputCorrect = false }
-        if(!temp[2].all { it.isLetter() || it.isDigit() }) { inputCorrect = false }
+            inputCorrect = false //Проверяем, все ли у нас 3 части операции (Что менять, на что менять и как менять)
+
+        if(!temp[0].all { it.isLetter() || it.isDigit() }) { inputCorrect = false } //Проверяем на соответствие алфавиту
+        if(!temp[2].all { it.isLetter() || it.isDigit() }) { inputCorrect = false } //Проверяем на соответствие алфавиту
     }
     return(inputCorrect)
 }
