@@ -2,7 +2,39 @@ package ru.emkn.kotlin
 import java.io.File
 
 //val scan = Scanner(System.`in`)
-fun main(args: String) : String {
+fun main(args: Array<String>) {
+    var rules = readFileAsLinesUsingUseLines("input.txt") //Считываем набор строк из файла
+    var inpString = rules[0] //Отделяем строку, с которой будем работать
+    rules = rules.drop(1) //Удаляем ее из List
+
+    if(!checkInput(inpString, rules)) {
+        println("Входные данные некорректны. Прочитайте документацию в файле DOC.md")
+        return
+    }
+
+    print("$inpString ->  ") //Вывод для отслеживания процесса выполнения алгоритма
+
+    var endAlgo = false //Индикатор, нужно ли завершать алгоритм
+
+    val start = System.currentTimeMillis() //Начнем отсчет времени работы алгоритма
+
+    while (!endAlgo) {
+        if(System.currentTimeMillis() - start > 5000) {
+            println("Алгоритм работает свыше 5 секунд")
+            return
+        }
+        endAlgo = goThroughRules(inpString, rules).second
+        inpString = goThroughRules(inpString, rules).first //Обновляем слово
+        if (endAlgo) {
+            print(inpString)
+            println("")
+        }
+        else
+            print("$inpString ->  ")
+    }
+}
+
+fun load(args: String) : String {
     var rules = readFileAsLinesUsingUseLines(args) //Считываем набор строк из файла
     var inpString = rules[0] //Отделяем строку, с которой будем работать
     rules = rules.drop(1) //Удаляем ее из List
@@ -31,6 +63,7 @@ fun main(args: String) : String {
     }
     return "$inpString"
 }
+
 fun goThroughRules (inpString: String, rules: List<String>) : Pair<String, Boolean> {
     var endAlgo = true
     for (rule in rules) {
